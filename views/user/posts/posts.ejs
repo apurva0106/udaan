@@ -1,0 +1,427 @@
+<script>console.log('in file posts')</script>
+
+<script>
+    let flag = {
+        'member-info': true,
+        'add-member': true,
+        'notdonated': true
+    };
+    const dropdownHandler = (params) => {
+        let dropdown = document.getElementById(params);
+        let open1 = document.getElementById(`${params}-open`);
+        let close1 = document.getElementById(`${params}-close`);
+        if (!flag.params) {
+            dropdown.classList.add("opacity-0");
+            dropdown.classList.add("-translate-y-4");
+            setTimeout(() => {
+                dropdown.classList.add("hidden");
+            }, 200);
+            open1.classList.add("hidden");
+            close1.classList.remove("hidden");
+            flag.params = true;
+        } else {
+            dropdown.classList.remove("hidden");
+            setTimeout(() => {
+                dropdown.classList.remove("opacity-0");
+                dropdown.classList.remove("-translate-y-4");
+            }, 200);
+            close1.classList.add("hidden");
+            open1.classList.remove("hidden");
+            flag.params = false;
+        }
+        console.log(flag.params);
+    };
+
+
+    // const top = () => { showTopLoader(); setTimeout(() => { hideTopLoader }, 4000) }
+
+
+// excel sheet manager
+
+</script>
+
+<script src="/scripts/cities.js"></script>
+
+<div class="p-4">
+    <button
+        class="focus:outline-none w-full z-100 focus:ring-2 focus:ring-offset-2 -tr focus:ring-gray-500 focus:bg-gray-100 p-4 shadow rounded bg-white text-sm font-medium leading-none text-gray-800 flex items-center justify-between cursor-pointer"
+        onclick="dropdownHandler('member-info')">
+        My Posts
+        <div class="">
+            <div class="hidden" id="member-info-close">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.00016 0.666664L9.66683 5.33333L0.333496 5.33333L5.00016 0.666664Z" fill="#1F2937" />
+                </svg>
+            </div>
+            <div id="member-info-open">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.00016 5.33333L0.333496 0.666664H9.66683L5.00016 5.33333Z" fill="#1F2937" />
+                </svg>
+            </div>
+        </div>
+    </button>
+    <div class="w-full -z-10 mt-2 p-4 bg-white shadow overflow-x-scroll  transform transition-all duration-200 rounded"
+        id="member-info">
+
+        <!-- list  -->
+        <table class="table-auto border-collapse w-full">
+            <thead>
+                <tr class="search-class rounded-lg text-sm font-medium text-gray-700 text-left"
+                    style="font-size: 0.9674rem">
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Profile</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Name</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Father's Name</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Age</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">City</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">State</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Location</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Date Of Missing</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Responses</th>
+                    <th class="px-4 py-2 " style="background-color:#f8f8f8">Date Added</th>
+                    <th class="px-4 py-2 " style="background-color:#f8f8f8">Poster</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm font-normal text-gray-700">
+                <% data.activePosts.forEach(function(post){ %>
+                    <tr class="search-class hover:bg-gray-100 border-b border-gray-200 py-10">
+                        <td class="px-4 py-4">
+                            <div class="w-12 h-12 bg-gray-200 shadow-xl overflow-hidden rounded-full">
+                                <img alt="profile" style="object-fit:contain" class="w-full h-full"
+                                    src="<%-post.imageLink %>">
+                            </div>
+    </div>
+    </td>
+    <td class="px-4 py-4">
+        <%-post.name%>
+    </td>
+    <td class=" px-4 py-4 ">
+        <%-post.fatherName%>
+    </td>
+    <td class=" px-4 py-4 ">
+        <%-post.age%>
+    </td>
+    <td class=" px-4 py-4 ">
+        <%-post.city%>
+    </td>
+    <td class="px-4 py-4">
+        <%-post.state%>
+    </td>
+    <td class="px-4 py-4">
+        <%-post.locationOfMissing%>
+    </td>
+    <td class="px-4 py-4">
+        <%-post.dateOfMissing%>
+    </td>
+
+    <td class="px-4 py-4">
+        <a onclick="showTopLoader()" href="/user/updatePostStatus/<%-post.postId%>">
+            <button
+                class="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">Located</button>
+        </a>
+    </td>
+
+    <td class="px-4 py-4">
+        <a onclick="showTopLoader()" href="/user/getResponses/<%-post.postId%>">
+            <button
+                class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">View
+                <%-post.responsesCount%> Responses
+            </button>
+        </a>
+    </td>
+
+    <td class="px-4 py-4">
+        <%-post.dateAdded%>
+    </td>
+
+
+    <td class="px-4 py-4">
+        <a href="/user/getImagePoster/<%-post.postId%>">
+            <button
+                class="bg-violet-500 hover:bg-violet-400 text-white font-bold py-1 px-4 border-b-4 border-violet-700 hover:border-violet-500 rounded">
+                Download
+            </button>
+        </a>
+    </td>
+
+    </tr>
+    <%})%>
+        </tbody>
+        </table>
+
+</div>
+</div>
+
+
+
+<div class="p-4">
+    <button
+        class="focus:outline-none w-full z-100 focus:ring-2 focus:ring-offset-2 -tr focus:ring-gray-500 focus:bg-gray-100 p-4 shadow rounded bg-white text-sm font-medium leading-none text-gray-800 flex items-center justify-between cursor-pointer"
+        onclick="dropdownHandler('member1-info')">
+        Located Posts
+        <div class="">
+            <div class="hidden" id="member1-info-close">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.00016 0.666664L9.66683 5.33333L0.333496 5.33333L5.00016 0.666664Z" fill="#1F2937" />
+                </svg>
+            </div>
+            <div id="member1-info-open">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.00016 5.33333L0.333496 0.666664H9.66683L5.00016 5.33333Z" fill="#1F2937" />
+                </svg>
+            </div>
+        </div>
+    </button>
+    <div class="w-full -z-10 mt-2 p-4 bg-white shadow overflow-x-scroll  transform transition-all duration-200 rounded"
+        id="member1-info">
+
+        <!-- list  -->
+        <table class="table-auto border-collapse w-full">
+            <thead>
+                <tr class="search-class rounded-lg text-sm font-medium text-gray-700 text-left"
+                    style="font-size: 0.9674rem">
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Profile</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Name</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Father's Name</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Age</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">City</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">State</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Location</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Date Of Missing</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Close Date</th>
+                    <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">Responses</th>
+                    <th class="px-4 py-2 " style="background-color:#f8f8f8">Date Added</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm font-normal text-gray-700">
+                <% data.locatedPosts.forEach(function(post){ %>
+                    <tr class="search-class hover:bg-gray-100 border-b border-gray-200 py-10">
+                        <td class="px-4 py-4">
+                            <div class="w-12 h-12 bg-gray-200 shadow-xl overflow-hidden rounded-full">
+                                <img alt="profile" style="object-fit:contain" class="w-full h-full"
+                                    src="<%-post.imageLink %>">
+                            </div>
+    </div>
+    </td>
+    <td class="px-4 py-4">
+        <%-post.name%>
+    </td>
+    <td class=" px-4 py-4 ">
+        <%-post.fatherName%>
+    </td>
+    <td class=" px-4 py-4 ">
+        <%-post.age%>
+    </td>
+    <td class=" px-4 py-4 ">
+        <%-post.city%>
+    </td>
+    <td class="px-4 py-4">
+        <%-post.state%>
+    </td>
+    <td class="px-4 py-4">
+        <%-post.locationOfMissing%>
+    </td>
+    <td class="px-4 py-4">
+        <%-post.dateOfMissing%>
+    </td>
+
+    <td class="px-4 py-4">
+        <%-post.closeDate%>
+    </td>
+
+    <td class="px-4 py-4">
+        <a onclick="showTopLoader()" href="/user/getResponses/<%-post.postId%>">
+            <button
+                class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">View
+                <%-post.responsesCount%> Responses
+            </button>
+        </a>
+    </td>
+
+    <td class="px-4 py-4">
+        <%-post.dateAdded%>
+    </td>
+
+    </tr>
+    <%})%>
+        </tbody>
+        </table>
+
+</div>
+</div>
+
+
+
+
+<div class="p-4">
+    <button
+        class="focus:outline-none w-full z-100 focus:ring-2 focus:ring-offset-2 -tr focus:ring-gray-500 focus:bg-gray-100 p-4 shadow rounded bg-white text-sm font-medium leading-none text-gray-800 flex items-center justify-between cursor-pointer"
+        onclick="dropdownHandler('add-member')">
+        Add Post
+        <div class="">
+            <div class="hidden" id="add-member-close">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.00016 0.666664L9.66683 5.33333L0.333496 5.33333L5.00016 0.666664Z" fill="#1F2937" />
+                </svg>
+            </div>
+            <div id="add-member-open">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.00016 5.33333L0.333496 0.666664H9.66683L5.00016 5.33333Z" fill="#1F2937" />
+                </svg>
+            </div>
+        </div>
+    </button>
+    <div class="w-full -z-10 mt-2 p-4 bg-gray-100 shadow overflow-x-scroll md:overflow-x-hidden transform transition-all duration-200 rounded"
+        id="add-member">
+
+
+        <div class="flex px-2 md:px-20 flex-col mt-8">
+            <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                <form action="/user/createPost" method="post" enctype="multipart/form-data">
+                    <div class="w-full space-y-8 p-10 bg-white rounded-xl shadow-xl mb-4 z-10">
+                        <div class="grid gap-8 grid-cols-1">
+                            <div class="flex flex-col ">
+                                <div class="mt-5">
+                                    <div class="form">
+                                        <div class="md:space-y-2 mb-3">
+                                            <label class="text-2xl font-semibold text-gray-600 py-2">Add New
+                                                Post<abbr class="hidden" title="required">*</abbr></label>
+                                        </div>
+                                        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                                            <div class="mb-3 space-y-2 w-full text-xs">
+                                                <label class="font-semibold text-gray-600 py-2">Name <abbr
+                                                        title="required">*</abbr></label>
+                                                <input placeholder="Member Name"
+                                                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                                    required="required" name="name" type="text">
+                                                <p class="text-red text-xs hidden">Please fill out this field.</p>
+                                            </div>
+
+
+                                            <div class="mb-3 space-y-2 w-full text-xs">
+                                                <label class="font-semibold text-gray-600 py-2">Father's Name <abbr
+                                                        title="required">*</abbr></label>
+                                                <input placeholder="father's name"
+                                                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                                    required="required" name="fatherName" type="text">
+                                                <p class="text-red text-xs hidden">Please fill out this field.</p>
+                                            </div>
+
+
+
+                                            <div class="mb-3 space-y-2 w-full text-xs">
+                                                <label class="font-semibold text-gray-600 py-2">Age<abbr
+                                                        title="required">*</abbr></label>
+                                                <input placeholder="Age"
+                                                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                                    required="required" name="age" type="number">
+                                                <p class="text-red text-xs hidden">Please fill out this field.</p>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+
+
+                                            <div class="w-full flex flex-col mb-3">
+                                                <label class="font-semibold text-gray-600 py-2">State<abbr
+                                                        title="required"> *</abbr></label>
+                                                <select
+                                                    class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full "
+                                                    id="sts" name="state"
+                                                    onchange="print_city('state', this.selectedIndex)">
+
+                                                </select>
+                                                <p class="text-sm text-red-500 hidden mt-3" id="error">Please fill out
+                                                    this
+                                                    field.</p>
+                                            </div>
+
+
+                                            <div class="w-full flex flex-col mb-3">
+                                                <label class="font-semibold text-gray-600 py-2">City<abbr
+                                                        title="required"> *</abbr></label>
+                                                <select
+                                                    class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full "
+                                                    name="city" id="state">
+
+                                                </select>
+                                                <p class="text-sm text-red-500 hidden mt-3" id="error">Please fill out
+                                                    this
+                                                    field.</p>
+                                            </div>
+
+                                            <script>print_state("sts")</script>
+
+
+                                            <div class="w-full flex flex-col mb-3">
+                                                <label class="font-semibold text-gray-600 py-2">Location<abbr
+                                                        title="required">*</abbr></label>
+                                                <input placeholder="Location"
+                                                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                                    required="required" name="locationOfMissing" type="text">
+                                                <p class="text-red text-xs hidden">Please fill out this field.</p>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+
+                                            <div class="w-full flex flex-col mb-3">
+                                                <label class="font-semibold text-gray-600 py-2">Date Of Missing<abbr
+                                                        title="required">*</abbr></label>
+                                                <input placeholder="Date"
+                                                    class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                                    required="required" name="dateOfMissing" type="date">
+                                                <p class="text-red text-xs hidden">Please fill out this field.</p>
+                                            </div>
+
+
+
+                                            <div class="w-full flex flex-col mb-3">
+                                                <label class="font-semibold text-gray-600 py-2"> Image<abbr
+                                                        title="Compulsory">*</abbr></label>
+                                                <input type="file" class="mt-2" name="image" id="file">
+                                                <p class="text-sm text-red-500 hidden mt-3" id="error">Please fill out
+                                                    this
+                                                    field.</p>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse">
+                                            <button type="submit"
+                                                class="mb-2 md:mb-0 bg-violet-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-violet-500">Add
+                                                Post</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- scripts for validations -->
+<script>
+    //script for image size restriction
+
+    var uploadField = document.getElementById("file");
+
+    uploadField.onchange = function () {
+        if (this.files[0].size > 2097152) {
+            alert("File is too big!");
+            this.value = "";
+        };
+    };
+</script>
