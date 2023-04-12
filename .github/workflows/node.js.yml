@@ -44,7 +44,7 @@ jobs:
         run: pnpm install
 
       - name: Add env variables
-        run: echo jwt=${{ secrets.jwt }} >> .env && echo cloudinary_cloud_name=${{ secrets.cloudinary_cloud_name }} >> .env && echo cloudinary_api_key=${{ secrets.cloudinary_api_key }} >> .env && echo cloudinary_api_secret=${{ secrets.cloudinary_api_secret }} >> .env && echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env && echo port=${{ secrets.port }} >> .env && echo AWS_SES_USER=${{ secrets.AWS_SES_USER }} >> .env && echo AWS_HOST=${{ secrets.AWS_HOST }} >> .env && echo AWS_SES_PASSWORD=${{ secrets.AWS_SES_PASSWORD }} >> .env
+        run: echo jwt=${{ secrets.JWT }} >> .env && echo cloudinary_cloud_name=${{ secrets.CLOUDINARY_CLOUD_NAME }} >> .env && echo cloudinary_api_key=${{ secrets.CLOUDINARY_API_KEY }} >> .env && echo cloudinary_api_secret=${{ secrets.CLOUDINARY_API_SECRET }} >> .env && echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env && echo port=${{ secrets.PORT }} >> .env && echo AWS_SES_USER=${{ secrets.AWS_SES_USER }} >> .env && echo AWS_HOST=${{ secrets.AWS_HOST }} >> .env && echo AWS_SES_PASSWORD=${{ secrets.AWS_SES_PASSWORD }} >> .env
 
       - name: Install pm2
         run: npm i pm2 -g
