@@ -21,27 +21,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-
-      - uses: pnpm/action-setup@v2.0.1
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install dependencies
-        run: pnpm install
+      
+      - name: Install Dependencies
+        run: npm install
 
       - name: Add env variables
         run: echo jwt=${{ secrets.JWT }} >> .env && echo cloudinary_cloud_name=${{ secrets.CLOUDINARY_CLOUD_NAME }} >> .env && echo cloudinary_api_key=${{ secrets.CLOUDINARY_API_KEY }} >> .env && echo cloudinary_api_secret=${{ secrets.CLOUDINARY_API_SECRET }} >> .env && echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env && echo port=${{ secrets.PORT }} >> .env && echo AWS_SES_USER=${{ secrets.AWS_SES_USER }} >> .env && echo AWS_HOST=${{ secrets.AWS_HOST }} >> .env && echo AWS_SES_PASSWORD=${{ secrets.AWS_SES_PASSWORD }} >> .env
