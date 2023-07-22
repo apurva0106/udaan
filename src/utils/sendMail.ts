@@ -29,7 +29,7 @@ const mailSender = async (
   );
 
   let mailOptions = {
-    from: "apurva0106.be20@chitkara.edu.in",
+    from: "no-reply@contact.karanchugh.in",
     to: senderAddress,
     subject: subject,
     html: htmlData,
