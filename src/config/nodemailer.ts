@@ -11,7 +11,7 @@ var dotenv = require("dotenv").config();
 // Send e-mail using SMTP
 // mailOptions.subject = "Nodemailer SMTP transporter";
 var smtpTransporter = nodemailer.createTransport({
-  port: 465,
+  port: 587,
   host: process.env.AWS_HOST,
   secure: true,
   auth: {
